@@ -15,11 +15,11 @@ if [ "${EXPORTPATH:LEN}" != "/" ]; then
 	EXPORTPATH=$EXPORTPATH"/"
 fi
 
+### Check if UUID exists
 TEMP=$(xe vm-list is-control-domain=false | grep -A1 $UUID)
 if [ $? -ne 0 ]; then
 	echo "UUID $UUID not found. Aborting"
 	exit 1
-
 else
 	echo "UUID $UUID found."
 	VMNAME=$(expr "$TEMP" : '.*\:\ \([a-zA-Z0-9\-\_\+\.]*\)')
