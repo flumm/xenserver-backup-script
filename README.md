@@ -25,5 +25,6 @@ folder-to-export | The Folder you wish to back up your VM. Can be absolute or re
 ##### Restoring:
 
 On the command line, run:
+
 `xe vm-import filename=[path to .xva file]`
 
