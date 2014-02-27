@@ -29,7 +29,7 @@ EXPORTPATH=
 DRYRUN=0
 NUMBER_OF_BACKUPS=3
 EXCLUDEDVMS=""
-
+DATEFOLDER=$(date +%Y-%m-%d_%H%M)
 
 while getopts "ade:p:u:" OPTION
 do
@@ -85,7 +85,7 @@ backup-single-vm(){
 		echo $(date +%d.%m.%Y\ %R:%S\ ) "UUID $VMUUID found."
 		VMNAME=$(expr "$TEMP" : '.*\:\ \([a-zA-Z0-9\-\_\+\.\ \(\)\-]*\)')
 		echo $(date +%d.%m.%Y\ %R:%S\ ) "Has the name: $VMNAME"
-		if [[ $EXCLUDEDVMS =~ "$VMNAME," ]]; then
+		if grep -Fxq "$VMNAME" $EXCLUDE_FILE; then
 			echo "$VMNAME is in excluded list, not backing up"
 		elif [ "$DRYRUN" -eq "0" ]; then
 			echo $(date +%d.%m.%Y\ %R:%S\ ) "Creating snapshot: \"$VMNAME\" "
