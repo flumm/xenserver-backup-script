@@ -152,8 +152,10 @@ backup-single-vm(){
 }
 
 get-all-vms(){
+	HOSTNAME=$(hostname)
 	UUIDS=
-	TMP=$(xe vm-list is-control-domain=false | grep -i uuid)
+	HOSTUUID=$(xe host-list hostname=$HOSTNAME | grep -i uuid | sed 's/uuid[^\:]*\:\ //g')
+	TMP=$(xe vm-list is-control-domain=false affinity=$HOSTUUID | grep -i uuid)
 # next line is a test string
 #	TMP="uuid ( RO)           : 77b55200-67c7-4325-b3af-1874e4c4ef10\nuuid ( RO)           : 77b55201-67c7-4325-b3af-1874e4c4ef11\nuuid ( RO)           : 77b55202-67c7-4325-b3af-1874e4c4ef12\nuuid ( RO)           : 77b55203-67c7-4325-b3af-1874e4c4ef13\n"
 	UUIDS=$(echo $TMP | sed 's/uuid[^\:]*\:\ //g')
